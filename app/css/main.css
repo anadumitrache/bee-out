@@ -1,0 +1,25 @@
+body {
+  background-color: rgb(0, 17, 44);
+}
+
+.bee-img {
+  height: 100px;
+  margin-top: -30px;
+}
+
+.radius-button {
+  background-color: #ffde00;
+  border-color: rgb(0, 17, 44);
+}
+
+.radius-button:active,
+.radius-button:hover {
+  background-color: rgb(0, 17, 44);
+}
+
+.bee-button,
+.table.bee-table thead th {
+  color: #fff;
+  background-color: rgb(0, 17, 44);
+  border-color: rgb(0, 17, 44);
+}
