@@ -1,0 +1,21 @@
+<table class="table table-hover bee-table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col"><i class="material-icons">directions_walk</i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="recommendation in recommendedPlaces | orderBy : 'venue.location.distance'" ng-click="goToGoogleMaps(recommendation.venue.location)">
+      <td>{{recommendation.venue.name}}</td>
+      <td>
+        <div ng-repeat="category in recommendation.venue.categories">
+          <img ng-src="{{category.icon.prefix + 'bg_32' + category.icon.suffix}}">
+          <span>{{category.name}}<span>
+            </div>
+          </td>
+          <td>{{recommendation.venue.location.distance}} m</td>
+        </tr>
+      </tbody>
+      </table>

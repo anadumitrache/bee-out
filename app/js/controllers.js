@@ -9,12 +9,60 @@ function MainController(dataService, geolocationService, $scope, $window) {
   $scope.filters.section = "";
   $scope.coordinates = {};
   $scope.recommendedPlaces = [];
+  $scope.listView = true;
+
+  var markers = [];
 
   $scope.venues = [];
 
   $scope.radiusOptions = [250, 500, 1000, 10000];
 
   getUserLocation();
+
+  $scope.showList = function(value) {
+    $scope.listView = value;
+  };
+
+  function initMap() {
+    $scope.map = new $window.google.maps.Map(
+      $window.document.getElementById("map"),
+      {
+        zoom: 12,
+        center: {
+          lat: $scope.coordinates.latitude,
+          lng: $scope.coordinates.longitude
+        }
+      }
+    );
+  }
+
+  $scope.goToGoogleMaps = function(location) {
+    $window.open(
+      "https://www.google.com/maps?q=" + location.lat + "," + location.lng
+    );
+  };
+
+  function addMarkersToMap() {
+    removeMarkers();
+    $scope.recommendedPlaces.forEach(function(element) {
+      var venueLocation = element.venue.location;
+      var marker = new $window.google.maps.Marker({
+        position: { lat: venueLocation.lat, lng: venueLocation.lng },
+        map: $scope.map
+      });
+      $window.google.maps.event.addListener(marker, "click", function() {
+        $scope.goToGoogleMaps(venueLocation);
+      });
+      markers.push(marker);
+    });
+  }
+
+  function removeMarkers() {
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers.length = 0;
+  }
 
   $scope.eraseLocation = function() {
     $scope.coordinates.longitude = null;
@@ -42,6 +90,7 @@ function MainController(dataService, geolocationService, $scope, $window) {
         })
         .then(function(httpResponse) {
           $scope.recommendedPlaces = httpResponse.data.response.groups[0].items;
+          addMarkersToMap();
         });
     }
   };
@@ -57,6 +106,7 @@ function MainController(dataService, geolocationService, $scope, $window) {
         .then(function(result) {
           $scope.filters.address = result;
           $scope.getVenues();
+          initMap();
         });
     });
   }

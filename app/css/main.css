@@ -41,6 +41,7 @@ body {
   border-color: rgb(0, 17, 44);
 }
 
+.table.bee-table tr,
 .bee-form .input-group-apppend {
   cursor: pointer;
 }
@@ -49,6 +50,11 @@ body {
 .bee-form input {
   border: 1px solid rgb(0, 17, 44);
   outline: none;
+}
+
+#map {
+  height: 300px;
+  width: 100%;
 }
 
 @media screen and (max-width: 992px) {
