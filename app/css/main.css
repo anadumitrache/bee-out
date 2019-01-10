@@ -2,6 +2,13 @@ body {
   background-color: rgb(0, 17, 44);
 }
 
+.bee-header {
+  font-size: 30px;
+  height: 150px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 .bee-img {
   height: 100px;
   margin-top: -30px;
@@ -12,9 +19,10 @@ body {
   border-color: rgb(0, 17, 44);
 }
 
-.radius-button:active,
+.radius-button.active,
 .radius-button:hover {
   background-color: rgb(0, 17, 44);
+  color: #fff;
 }
 
 .bee-button,
@@ -22,4 +30,22 @@ body {
   color: #fff;
   background-color: rgb(0, 17, 44);
   border-color: rgb(0, 17, 44);
+}
+
+.bee-form .input-group-text {
+  color: #ffde00;
+  background-color: rgb(0, 17, 44);
+  border: rgb(0, 17, 44);
+}
+
+.bee-form select,
+.bee-form input {
+  border: 1px solid rgb(0, 17, 44);
+  outline: none;
+}
+
+@media screen and (max-width: 992px) {
+  .bee-track {
+    width: 370px;
+  }
 }

@@ -1,35 +1,38 @@
 <div class="card mb-3">
   <div class="card-body">
-    <form>
+    <form class="bee-form">
       <div class="form-group">
-        <label for="radius">Radius (km)</label>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary radius-button">
-               <input type="radio" name="radius" id="option1" autocomplete="off" checked> 0.5
-               </label>
-          <label class="btn btn-secondary radius-button">
-               <input type="radio" name="radius" id="option2" autocomplete="off"> 1
-               </label>
-          <label class="btn btn-secondary radius-button">
-               <input type="radio" name="radius" id="option3" autocomplete="off"> 5
-               </label>
-          <label class="btn btn-secondary radius-button">
-               <input type="radio" name="radius" id="option3" autocomplete="off"> 10
-               </label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="material-icons">room</i></div>
+          </div>
+          <input type="text" id="address" class="form-control" placeholder="Pick address" ng-model="filters.address" ng-init="autocompleteAddress()">
         </div>
       </div>
-      <div class="form-group">
-        <label for="type">Section
-            </label>
-        <select class="form-control">
-               <option>1</option>
-               <option>2</option>
-               <option>3</option>
-               <option>4</option>
-               <option>5</option>
+      <div class=" form-group ">
+        <label for="radius ">Radius (km)</label>
+        <div class=" ">
+          <button class="btn radius-button " ng-click="getVenues() ">0.25</button>
+          <button class="btn radius-button " ng-click="getVenues() ">0.5</button>
+          <button class="btn radius-button " ng-click="getVenues() ">1</button>
+          <button class="btn radius-button " ng-click="getVenues() ">10</button>
+        </div>
+        <div class="form-group ">
+          <label for="type ">Section</label>
+          <select class="form-control ">
+               <option value=" ">All</option> 
+               <option value="food ">Food</option>
+               <option value="drinks ">Drinks</option>
+               <option value="coffee ">Coffee</option>
+               <option value="shops ">Shops</option>
+               <option value="outdoors ">Outdoors</option>
+               <option value="arts ">Arts</option>
+               <option value="sights ">Sights</option>
+               <option value="trending ">Trending</option>
+               <option value="topPicks ">Top picks</option>
             </select>
-      </div>
-      <button type="submit" class="btn bee-button btn-lg btn-block">Search</button>
+        </div>
+        <button type="submit " class="btn bee-button btn-lg btn-block " ng-click="getVenues() ">Search</button>
     </form>
+    </div>
   </div>
-</div>
