@@ -6,16 +6,18 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">room</i></div>
                     </div>
-                    <input type="text" ng-change="checkLocation()" id="address" class="form-control" placeholder="Pick address" ng-model="filters.address" ng-init="autocompleteAddress()">
+                    <input id="address" type="text" class="form-control" placeholder="Pick address" 
+                            ng-model="filters.address" ng-init="autocompleteAddress()">
                     <div class="input-group-apppend" ng-click="eraseLocation()">
                         <div class="input-group-text">X</div>
                     </div>
                 </div>
             </div>
-            <div class=" form-group ">
-                <label for="radius ">Radius (km)</label>
+            <div class="form-group">
+                <label for="radius">Radius (km)</label>
                 <div>
-                    <button ng-repeat="option in radiusOptions" class="btn radius-button" ng-class="{active: filters.radius === option}" ng-click="updateRadius(option)">
+                    <button ng-repeat="option in radiusOptions" class="btn radius-button" 
+                            ng-class="{active: filters.radius === option}" ng-click="updateRadius(option)">
                         {{option/1000}}
                     </button>
                 </div>
@@ -34,7 +36,9 @@
                         <option value="topPicks ">Top picks</option>
                     </select>
                 </div>
-                <button type="submit " class="btn bee-button btn-lg btn-block " ng-click="getVenues()">Search</button>
+                <button type="submit" class="btn bee-button btn-lg btn-block" ng-click="getVenues()">
+                  Search
+                </button>
         </form>
     </div>
 </div>

@@ -2,31 +2,34 @@ angular
     .module("bee-out.controllers", [])
     .controller("MainController", MainController);
 
-function MainController(dataService, geolocationService, $scope, $window) {
-    // store filters
+function MainController($scope, $window, dataService, geolocationService, mapUtilityService) {
+
+   var coordinates = {};
+
+    // initial filters
     $scope.filters = {
         address: "",
         radius: 250,
         section: ""
     };
 
-    $scope.coordinates = {};
     $scope.recommendedPlaces = [];
 
-    // flags to hide/sow the spinner,no-results tab and list-view
+    // flags to hide/show the spinner, the no results tab and the list view tab
     $scope.listView = true;
     $scope.showSpinner = true;
     $scope.noResults = false;
 
-    // array of map markers
-    $scope.markers = [];
     // array of found venues
     $scope.venues = [];
+
     $scope.radiusOptions = [250, 500, 1000, 10000];
+
+    $scope.goToGoogleMaps = mapUtilityService.goToGoogleMaps;
 
     getUserLocation();
 
-    // List view is selected by default
+    // set list view tab
     $scope.showList = function(value) {
         $scope.listView = value;
     };
@@ -41,17 +44,11 @@ function MainController(dataService, geolocationService, $scope, $window) {
     };
 
     $scope.eraseLocation = function() {
-        setUserCoordinates(null, null);
-        removeMarkers();
+        setUserCoordinates();
+        mapUtilityService.removeMarkers();
         $scope.filters.address = "";
         $scope.recommendedPlaces.length = 0;
         $scope.noResults = true;
-    };
-
-    $scope.goToGoogleMaps = function(location) {
-        $window.open(
-            "https://www.google.com/maps?q=" + location.lat + "," + location.lng
-        );
     };
 
     // get the venues according to selected filters
@@ -66,101 +63,56 @@ function MainController(dataService, geolocationService, $scope, $window) {
             );
         }
 
-        if (
-            !$scope.autocomplete.getPlace ||
-            !$scope.coordinates.longitude ||
-            !$scope.coordinates.latitude ||
-            !$scope.filters.address
-        ) {
+        if (!coordinates.longitude || !coordinates.latitude || !$scope.filters.address) {
+           mapUtilityService.initMap();
             $scope.recommendedPlaces.length = 0;
             $scope.noResults = true;
         } else {
             $scope.showSpinner = true;
             dataService
                 .getVenues({
-                    longitude: $scope.coordinates.longitude,
-                    latitude: $scope.coordinates.latitude,
+                    longitude: coordinates.longitude,
+                    latitude: coordinates.latitude,
                     radius: $scope.filters.radius,
                     section: $scope.filters.section
                 })
-                .then(function(httpResponse) {
+                .then(function(places) {
                     $scope.showSpinner = false;
-                    $scope.recommendedPlaces = httpResponse.data.response.groups[0].items;
-                    addMarkersToMap();
-                    centerMap($scope.coordinates.latitude, $scope.coordinates.longitude);
+                    $scope.recommendedPlaces = places;
+                    mapUtilityService.initMap(coordinates.latitude, coordinates.longitude);
+                    mapUtilityService.removeMarkers();
+                    mapUtilityService.addMarkersToMap($scope.recommendedPlaces,buildMarkerInfo);
+                    mapUtilityService.setMapCenter(coordinates.latitude, coordinates.longitude);
                     if ($scope.recommendedPlaces.length === 0) $scope.noResults = true;
                 });
         };
 
     }
 
-    //get user current location, fill the adddress, get the recommended venues
+    // get user current location, fill the adddress, get the recommended venues
     function getUserLocation() {
-        geolocationService.getCurrentPosition().then(function(response) {
-            setUserCoordinates(response.coords.latitude, response.coords.longitude);
+        geolocationService.getCurrentPosition()
+        .then(function(coords) {
+            setUserCoordinates(coords.latitude, coords.longitude);
             geolocationService
-                .getAddressName(response.coords.latitude, response.coords.longitude)
-                .then(function(result) {
-                    $scope.filters.address = result;
+                .getAddressName(coords.latitude, coords.longitude)
+                .then(function(addressName) {
+                    $scope.filters.address = addressName;
                     $scope.getVenues();
-                    initMap();
                 })
+        }, function(){
+          $scope.showSpinner = false;
+          $scope.noResults = true;
         });
     }
 
-    // initialization of  the map
-    function initMap() {
-        $scope.map = new $window.google.maps.Map(
-            $window.document.getElementById("map"), {
-                zoom: 13,
-                center: {
-                    lat: $scope.coordinates.latitude,
-                    lng: $scope.coordinates.longitude
-                }
-            }
-        );
-    }
-
-    // adding a marker for each recommendede place
-    function addMarkersToMap() {
-        removeMarkers();
-        $scope.recommendedPlaces.forEach(function(element) {
-            var venue = element.venue;
-
-            var marker = new $window.google.maps.Marker({
-                position: {
-                    lat: venue.location.lat,
-                    lng: venue.location.lng
-                },
-                icon: 'assets/beehive.png',
-                map: $scope.map
-            });
-            var infowindow = new $window.google.maps.InfoWindow({
-                content: buildMarkerInfo(venue),
-                maxWidth: 260
-            });
-            $window.google.maps.event.addListener(marker, "click", function() {
-                infowindow.open(map, marker);
-            });
-            $scope.markers.push(marker);
-        });
-    }
-
-    //clean up all the markers from map
-    function removeMarkers() {
-        $scope.markers.forEach(function(marker) {
-            marker.setMap(null);
-        });
-        $scope.markers.length = 0;
-    }
-
-    //setting the user coordinates
+    // setting the user coordinates
     function setUserCoordinates(lat, long) {
-        $scope.coordinates.latitude = lat;
-        $scope.coordinates.longitude = long;
+        coordinates.latitude = lat;
+        coordinates.longitude = long;
     }
 
-    //concatenate categories of a venue
+    // concatenate categories of a venue
     function getCategories(venueCategories) {
         var categories = "<span>"
         venueCategories.forEach(function(category) {
@@ -170,7 +122,7 @@ function MainController(dataService, geolocationService, $scope, $window) {
         return categories + '</span>'
     }
 
-    //build marker information for map
+    // build marker information for map
     function buildMarkerInfo(venue) {
         return '<div><h5 class="firstHeading">' +
             venue.name +
@@ -185,11 +137,5 @@ function MainController(dataService, geolocationService, $scope, $window) {
             venue.location.lng +
             '">Go to Google Maps</a>' +
             '</div>';
-    }
-
-    // set the center of the map
-    function centerMap(lat, lng) {
-        var center = new google.maps.LatLng(lat, lng);
-        $scope.map.panTo(center);
-    }
+    }    
 }

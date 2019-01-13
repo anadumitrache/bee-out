@@ -85,24 +85,7 @@ body {
   animation: fly-up 8s linear infinite;
 }
 
-@-webkit-keyframes fly-up {
-  0% {
-    left: 0;
-    top: 0;
-  }
-  30% {
-    left: 40%;
-    top: 120px;
-  }
-  70% {
-    left: 80%;
-    top: 100px;
-  }
-  100% {
-    left: 100%;
-    top: 10px;
-  }
-}
+
 
 @keyframes fly-up {
   0% {
@@ -123,14 +106,6 @@ body {
   }
 }
 
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
 
 @keyframes spin {
   0% {
