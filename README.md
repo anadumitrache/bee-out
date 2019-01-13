@@ -22,8 +22,6 @@ The user can open the application [here. Bee Out](https://anadumitrache.github.i
 |![Mobile](README_Mobile_1.png) | ![Desktop](README_Desktop_1.png) | 
 |![Mobile](README_Mobile_2.png) | ![Desktop](README_Desktop_2.png) | 
 
-### Project structure
- 
 
 ### Technical references
 Framework used:
