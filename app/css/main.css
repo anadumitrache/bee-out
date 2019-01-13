@@ -26,6 +26,9 @@ body {
   color: #fff;
 }
 
+.bee-form .input-group-prepend,
+.bee-form .input-group-apppend,
+.bee-form .input-group-text,
 .bee-button,
 .table.bee-table thead th {
   color: #fff;
@@ -33,12 +36,16 @@ body {
   border-color: rgb(0, 17, 44);
 }
 
+.bee-button.active,
+.bee-button:hover {
+  color: rgb(0, 17, 44);
+  background-color: rgb(0, 17, 44, 0.2);
+}
+
 .bee-form .input-group-prepend,
 .bee-form .input-group-apppend,
 .bee-form .input-group-text {
   color: #ffde00;
-  background-color: rgb(0, 17, 44);
-  border-color: rgb(0, 17, 44);
 }
 
 .table.bee-table tr,
@@ -57,8 +64,94 @@ body {
   width: 100%;
 }
 
-@media screen and (max-width: 992px) {
-  .bee-track {
-    width: 370px;
+.black-bee-track {
+  width: 300px;
+}
+
+.no-results .black-bee-track{
+  width:500px;
+}
+
+.bee-spinner {
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.working-bee {
+  height: 30px;
+  position: absolute;
+  -webkit-animation: fly-up 8s linear infinite;
+  animation: fly-up 8s linear infinite;
+}
+
+@-webkit-keyframes fly-up {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  30% {
+    left: 40%;
+    top: 120px;
+  }
+  70% {
+    left: 80%;
+    top: 100px;
+  }
+  100% {
+    left: 100%;
+    top: 10px;
+  }
+}
+
+@keyframes fly-up {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  30% {
+    left: 40%;
+    top: 120px;
+  }
+  70% {
+    left: 80%;
+    top: 100px;
+  }
+  100% {
+    left: 100%;
+    top: 10px;
+  }
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 980px) {
+
+  .black-bee-track {
+    width: 115px;
+  }
+  .no-results .black-bee-track {
+    width: 270px;
+    height:55px;
+  }
+
+  .bee-spinner {
+    height: 40px;
   }
 }

@@ -1,40 +1,40 @@
 <div class="card mb-3">
-  <div class="card-body">
-    <form class="bee-form">
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="material-icons">room</i></div>
-          </div>
-          <input type="text" id="address" class="form-control" placeholder="Pick address" ng-model="filters.address" ng-init="autocompleteAddress()">
-          <div class="input-group-apppend" ng-click="eraseLocation()">
-            <div class="input-group-text">X</div>
-          </div>
-        </div>
-      </div>
-      <div class=" form-group ">
-        <label for="radius ">Radius (km)</label>
-        <div>
-          <button ng-repeat="option in radiusOptions" class="btn radius-button" ng-class="{active: filters.radius === option}" ng-click="updateRadius(option)">
-          {{option/1000}}
-          </button>
-        </div>
-        <div class="form-group ">
-          <label for="type ">Section</label>
-          <select class="form-control" ng-model="filters.section">
-               <option value="">All</option> 
-               <option value="food ">Food</option>
-               <option value="drinks ">Drinks</option>
-               <option value="coffee ">Coffee</option>
-               <option value="shops ">Shops</option>
-               <option value="outdoors ">Outdoors</option>
-               <option value="arts ">Arts</option>
-               <option value="sights ">Sights</option>
-               <option value="trending ">Trending</option>
-               <option value="topPicks ">Top picks</option>
-            </select>
-        </div>
-        <button type="submit " class="btn bee-button btn-lg btn-block " ng-click="getVenues()">Search</button>
-    </form>
+    <div class="card-body">
+        <form class="bee-form">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="material-icons">room</i></div>
+                    </div>
+                    <input type="text" ng-change="checkLocation()" id="address" class="form-control" placeholder="Pick address" ng-model="filters.address" ng-init="autocompleteAddress()">
+                    <div class="input-group-apppend" ng-click="eraseLocation()">
+                        <div class="input-group-text">X</div>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group ">
+                <label for="radius ">Radius (km)</label>
+                <div>
+                    <button ng-repeat="option in radiusOptions" class="btn radius-button" ng-class="{active: filters.radius === option}" ng-click="updateRadius(option)">
+                        {{option/1000}}
+                    </button>
+                </div>
+                <div class="form-group ">
+                    <label for="type ">Section</label>
+                    <select class="form-control" ng-model="filters.section">
+                        <option value="">All</option>
+                        <option value="food ">Food</option>
+                        <option value="drinks ">Drinks</option>
+                        <option value="coffee ">Coffee</option>
+                        <option value="shops ">Shops</option>
+                        <option value="outdoors ">Outdoors</option>
+                        <option value="arts ">Arts</option>
+                        <option value="sights ">Sights</option>
+                        <option value="trending ">Trending</option>
+                        <option value="topPicks ">Top picks</option>
+                    </select>
+                </div>
+                <button type="submit " class="btn bee-button btn-lg btn-block " ng-click="getVenues()">Search</button>
+        </form>
     </div>
-  </div>
+</div>

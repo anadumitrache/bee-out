@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <div ng-show="noResults" ng-include="'layout/no-results.html'" class="no-results"></div>
+        <div ng-show="showSpinner" ng-include="'layout/spinner.html'" class="d-flex justify-content-center pt-4 pb-4"></div>
+        <div ng-show="!showSpinner && !noResults">
+            <h5 class="card-title">
+                <button type="button" class="btn bee-button" ng-click="showList(true)" ng-class="{active: listView}"><i class="material-icons md-36">list</i></button>
+                <button type="button" class="btn bee-button" ng-click="showList(false)" ng-class="{active: !listView}"><i class="material-icons md-36">map</i></button>
+            </h5>
+            <div ng-show="listView" ng-include="'layout/search-result-list.html'"></div>
+            <div ng-show="!listView" ng-include="'layout/search-result-map.html'"></div>
+        </div>
+    </div>
+</div>
