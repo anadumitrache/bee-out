@@ -97,8 +97,8 @@ body {
     top: 100px;
   }
   100% {
-    left: 100%;
-    top: 10px;
+    left: 90%;
+    top: 0px;
   }
 }
 
