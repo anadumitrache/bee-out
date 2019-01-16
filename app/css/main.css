@@ -74,18 +74,14 @@ body {
 
 .bee-spinner {
   height: 50px;
-  -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
 
 .working-bee {
   height: 30px;
   position: absolute;
-  -webkit-animation: fly-up 8s linear infinite;
   animation: fly-up 8s linear infinite;
 }
-
-
 
 @keyframes fly-up {
   0% {
@@ -128,5 +124,14 @@ body {
 
   .bee-spinner {
     height: 40px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .bee-table.table td {
+    padding: 5px;
+  }
+  .bee-img {
+    height: 50px;
   }
 }
